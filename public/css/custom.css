@@ -1,0 +1,647 @@
+.stroke-line {
+    border-top: 1px solid #ddd;
+}
+
+.outline-none {
+    outline: none;
+}
+
+.outline-none:hover {
+    outline: none;
+}
+
+.p-logo {
+    padding: 1em 3em !important;
+}
+
+.resolution-12 {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+.background-white-50 {
+    background-color: #eceaea;
+}
+
+.background-white {
+    background-color: #fff;
+}
+
+.border-none {
+    border: none;
+}
+
+.b-1-dark {
+    border: 1px solid #ddd;
+}
+
+.border-radius-50 {
+    border-radius: 30px;
+    background: #114b93 !important;
+}
+
+.border-radius-10 {
+    border-radius: 10px;
+    border: none;
+}
+
+.border-radius-20 {
+    border-radius: 20px;
+    border: none;
+}
+
+.border-radius-30 {
+    border-radius: 30px;
+    border: none;
+}
+
+.error_msg {
+    color: red;
+    font-size: 20px;
+    padding: 20px 0px;
+}
+
+
+/* Side Bar */
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0px;
+    background-color: #eee;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+@media (min-width: 400px) {
+    .sidenav {
+        left: calc(50% - 200px);
+    }
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: black;
+    font-weight: bold;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    height: 33px;
+    margin-top: 20px;
+    line-height: 0.5;
+}
+
+.sidenav .menutitle {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    top: 25px;
+    font-size: 20px;
+}
+
+.sidenav a span {
+    vertical-align: text-top;
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+
+/* End Side Bar */
+
+.back-white {
+    background-color: white;
+}
+
+.color-sky {
+    color: #114b93;
+}
+
+.font60 {
+    font-size: 0.6em !important;
+}
+
+.font70 {
+    font-size: 0.7em !important;
+}
+
+.font80 {
+    font-size: 0.8em !important;
+}
+
+.font100 {
+    font-size: 1em !important;
+}
+
+.font120 {
+    font-size: 1.2em !important;
+}
+
+.font140 {
+    font-size: 1.4em !important;
+}
+
+.font160 {
+    font-size: 1.6em !important;
+}
+
+.font200 {
+    font-size: 2em !important;
+}
+
+.minwidth50 {
+    min-width: 50px !important;
+}
+
+.maintitle {
+    position: absolute;
+    left: 50px;
+    width: calc(100% - 100px);
+    top: 15px;
+    margin: 0 !important;
+    font-size: 15px;
+}
+
+.maintitlecustomer {
+    position: absolute;
+    left: 50px;
+    width: calc(100% - 120px);
+    top: 15px;
+    margin: 0 !important;
+    font-size: 15px;
+}
+
+@media (min-width: 400px) {
+    .maintitle {
+        font-size: 20px;
+    }
+}
+
+.subtitle {
+    font-size: 15px !important;
+}
+
+.normalfont {
+    font-size: 12px !important;
+}
+
+.customInputWidth {
+    width: calc(100% - 30px);
+}
+
+.calendar-day {
+    cursor: pointer;
+}
+
+.time-cell {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.time-cell-selected {
+    border: 1px solid #114b93;
+    color: white;
+    background-color: #114b93;
+    cursor: pointer;
+}
+
+.timetype-cell {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.timetype-selected {
+    border: 1px solid #114b93;
+    color: white;
+    cursor: pointer;
+    background-color: #114b93;
+}
+
+.minute-cell {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.minute-selected {
+    border: 1px solid #114b93;
+    color: white;
+    cursor: pointer;
+    background-color: #114b93;
+}
+
+.selectable-button-selected {
+    background-color: #114b93 !important;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    outline: none;
+    cursor: pointer;
+    font-size: 12px !important;
+    padding:5px !important;
+}
+.selectable-button {
+    background-color: #878786 !important;
+    border: #878786 1px solid;
+    border-radius: 40px;
+    outline: none;
+    cursor: pointer;
+    color: white;
+}
+
+.ride-button {
+    background-color: white;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    outline: none;
+    cursor: pointer;
+}
+
+.ride-selected {
+    background-color: #114b93 !important;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.src-address {
+    background-color: white;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    outline: none;
+    cursor: pointer;
+}
+
+.src-address-selected {
+    background-color: #114b93 !important;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.dst-address {
+    background-color: white;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    outline: none;
+    cursor: pointer;
+}
+
+.dst-address-selected {
+    background-color: #114b93 !important;
+    border: #114b93 1px solid;
+    border-radius: 40px;
+    color: white;
+    outline: none;
+    cursor: pointer;
+}
+
+.vehicle-cell {
+    color: #114b93;
+    background-color: white;
+    border: 1px solid #114b93;
+    padding: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.vehicle-selected {
+    color: white !important;
+    background: #114b93 !important;
+    cursor: pointer;
+}
+
+.dateInput-selected {
+    padding: 2px;
+    background-color: #114b93;
+}
+
+
+/* Settings Panel */
+
+.settings-panel {
+    margin: 40px 10px;
+    padding: 40px 20px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.innerSidenav {
+    width: 100vw;
+}
+
+@media (min-width: 400px) {
+    .innerSidenav {
+        width: 400px;
+    }
+}
+
+.color-red {
+    color: red !important;
+}
+
+.color-blue {
+    color: blue;
+}
+
+.color-white {
+    color: white;
+}
+
+.color-gray {
+    color: rgb(200, 200, 200);
+}
+
+.back-sky {
+    background-color: #114b93;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 0.5;
+    /* Firefox */
+}
+
+.calendar-day-selected {
+    background-color: #114b93 !important;
+    color: white !important;
+}
+
+#myModal {
+    max-width: 400px;
+    width: 100vw;
+    margin: auto;
+    height: 100vh;
+}
+
+.customer-field {
+    cursor: pointer;
+    background-color: white;
+    padding: 2px 10px;
+}
+
+.customer-field:hover {
+    background-color: #114b93;
+}
+
+#VariationAlert {
+    padding: 5px 15px !important;
+    margin: 0px !important;
+    color: red !important;
+    display: none;
+}
+
+.autocomplete-items {
+    margin: 0px 15px;
+}
+
+.changeLogo {
+    cursor: pointer;
+}
+
+.registerText{
+    color: #636363bf;
+    letter-spacing: 1px;
+    opacity: 1;
+}
+
+.color-dark-gray{
+    color: #636363bf;
+}
+.letter-spacing-1{
+    letter-spacing: 1px;
+}
+.color-green{
+    color: #2ceb2c;
+}
+.roles_checkbox{
+    width: 20px;
+    height: 20px;
+}
+.roles_label{
+    padding: 0px 0px 0px 10px;
+    vertical-align: super;
+    font-size: 16px;
+    font-weight: normal
+}
+.list-group-item{
+    border: none !important;
+    padding: 3px !important;
+    font-size: 16px;
+}
+.list-group{
+    margin-bottom: 0!important;
+}
+
+.reset-button{
+    text-align: center !important;
+    color: white;
+    align-items: center;
+    height: 35px;
+    font-size: 15px !important;
+    vertical-align: middle !important;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px !important;
+    background-color:red !important;
+    cursor: pointer !important;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  /* The Close Button */
+  .closebutton{
+    color: #000 !important;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 15px;
+
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .color-red{
+    cursor: pointer !important;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #114b93;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #114b93;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.thumb{
+    margin: 10px 5px 0 0;
+    width: 100px;
+    height:100px;
+}
+
+
+/* .delete-image{
+    display: none !important;
+} */
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+  }
+
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }

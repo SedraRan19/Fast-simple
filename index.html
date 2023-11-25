@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul de distance</title>
+</head>
+<body>
+    <h1>Calcul de distance entre deux adresses</h1>
+
+    <div>
+        <label for="origin">Adresse de départ:</label>
+        <input type="text" id="origin" placeholder="Entrez l'adresse de départ">
+    </div>
+
+    <div>
+        <label for="destination">Adresse de destination:</label>
+        <input type="text" id="destination" placeholder="Entrez l'adresse de destination">
+    </div>
+
+    <button onclick="calculateDistance()">Calculer la distance</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculateDistance() {
+            var origin = document.getElementById('origin').value;
+            var destination = document.getElementById('destination').value;
+
+            var service = new google.maps.DistanceMatrixService();
+
+            service.getDistanceMatrix({
+                origins: [origin],
+                destinations: [destination],
+                travelMode: 'DRIVING',
+                unitSystem: google.maps.UnitSystem.METRIC,
+            }, function(response, status) {
+                if (status === 'OK' && response.rows.length > 0 && response.rows[0].elements.length > 0) {
+                    var distance = response.rows[0].elements[0].distance.text;
+                    var duration = response.rows[0].elements[0].duration.text;
+
+                    document.getElementById('result').innerHTML = 'Distance: ' + distance + '<br>Duration: ' + duration;
+                } else {
+                    document.getElementById('result').innerHTML = 'Impossible de calculer la distance.';
+                }
+            });
+        }
+    </script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyATQgdZ12KKj6Kty5bJS90dnB9BUNEYnYg&sensor=false&libraries=places&callback=initAutocomplete&types=airport"></script>
+</body>
+</html>
