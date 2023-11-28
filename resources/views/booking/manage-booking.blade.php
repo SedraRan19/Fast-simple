@@ -17,101 +17,48 @@
             <div class="row pr-4 pl-4 pt-4 customer_block">
                 <div class="col-md-12 back-white border-radius-10">
                     <div class="row px-3 pt-3">
-                        <div class="col-md-12"><span class="font160">summary</span>
+                        <div class="col-md-12"><span class="font160"><b>{{$trip->customer->first_name.' '.$trip->customer->last_name}}</b></span>
                             <!-- <a href="javascript: history.go(-1)" class="float-right font200 color-red">&times;</a> -->
-                            <br> <span class="font120">07-10-2023 14:45</span>
+                            <br> <span class="font120"><b>{{ $trip->trip_date.' '.$trip->start_time}}</b></span>
                         </div>
                     </div>
                     <div class="row px-3 mt-3">
-                        <div class="col-md-12"><span class="font120"><b>Passenger Name</b> Ranivo </span></div>
-                    </div>
-
-                    <div class="row px-3 mt-3">
-                        <div class="col-md-12"><span class="font120"><b>Vehicle</b> Toyota corola</span></div>
+                        <div class="col-md-12"><span class="font120"><b>Vehicle</b>: {{$trip->vehicle->make.' '.$trip->vehicle->model}}</span></div>
                     </div>
                     <div class="row px-3 mt-3">
-                        <div class="col-md-12"><span class="font120"><b>From</b> Parsi</span>
+                        <div class="col-md-12"><span class="font120"><b>From</b>: {{$trip->from_location}}</span>
                         </div>
                     </div>
                     <div class="row px-3 mt-3">
-                        <div class="col-md-12"><span class="font120"><b>To</b> Marsaille/span>
+                        <div class="col-md-12"><span class="font120"><b>To</b>: {{$trip->to_location}}</span>
                         </div>
                     </div>
                     <div class="row px-3 mt-3">
-                        <div class="col-md-12"><span class="font120"><b>Price</b>: $12.99</span>
+                        <div class="col-md-12"><span class="font120"><b>Price</b>: {{'$'.$trip->price}}</span>
                         </div>
                     </div>
+                        <div class="col-md-6">
+                            <a href="">
+                                <div class="text-center wrapper selectable-button-selected px-3 py-3"
+                                    style="color:white;">Mark as unpaid</div>
+                            </a>
+                        </div>
+                        <div class="row px-3 pb-2 pt-1">
                             <div class="col-md-6">
-                                <a href="">
+                                <a href="{{route('refund_booking',['trip_id'=>$trip->id])}}">
                                     <div class="text-center wrapper selectable-button-selected px-3 py-3"
-                                        style="color:white;">Mark as unpaid</div>
+                                        style="color:white;">Refund</div>
                                 </a>
                             </div>
-                            </div class="col-md-5">
-                                <a href="">
-                                    <div class="text-center wrapper selectable-button-selected px-3 py-3" id="charge"
-                                        style="color:white;">Charge</div>
-                                </a>
-                            </div>
-                            <div class="row px-3 pb-2 pt-1">
-                                <div class="col-md-5">
-                                    <a href="">
-                                        <div class="text-center wrapper selectable-button-selected px-3 py-3"
-                                            style="color:white;">Refund</div>
-                                    </a>
-                                </div>
-                            </div>
+                            </div class="col-md-6">
+                            <a href="{{route('charge_booking',['id'=>$trip->id])}}">
+                                <div class="text-center wrapper selectable-button-selected px-3 py-3" id="charge"
+                                    style="color:white;">Charge</div>
+                            </a>
                         </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
-    <script>
-        function statusPaid(id) {
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                },
-                url: "{{ url('/status-change') }}",
-                type: "POST",
-                data: {
-                    'id': id
-                },
-                success: function(response) {
-                    console.log(response)
-                    if (response == 'Success') {
-                        $('#success-msg').show();
-                        window.location.reload();
-                    }
-                },
-            });
-        }
-
-        function chargePlan(id) {
-            $.ajax({
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-                },
-                url: "{{ url('/chargePlan') }}",
-                type: "POST",
-                data: {
-                    'id': id
-                },
-                beforeSend: function() {
-                    $('#charge').text('Loading...')
-                },
-                success: function(response) {
-                    console.log(response);
-                    if (response == 'Success') {
-                        $('#charge').text('Charge');
-                        $('#charge-success-msg').show(1).delay(1000).hide(1);
-                    }
-                },
-            });
-        }
-
-        function selectPlan() {
-            $('#error-msg').show(1).delay(1000).hide(1);
-
-        }
-    </script>
 @endsection

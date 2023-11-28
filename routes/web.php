@@ -33,7 +33,11 @@ Route::get('/create-booking', [BookingController::class,'index_create_booking'])
 Route::get('/step-booking', [BookingController::class,'index_step_booking'])->name('step_booking');
 Route::get('/confirm-booking', [BookingController::class,'index_confirm_booking'])->name('confirm_booking');
 Route::get('/trips', [BookingController::class,'index_trip'])->name('trips');
-Route::get('/manage/booking', [BookingController::class,'index_manage_booking'])->name('manage_booking');
+Route::get('/manage/booking/{id}', [BookingController::class,'index_manage_booking'])->name('manage_booking');
+Route::get('/charge-booking/{id}', [BookingController::class,'index_charge_booking'])->name('charge_booking');
+Route::post('/charge-use-card/{trip_id}', [BookingController::class,'use_card'])->name('use_card');
+Route::get('/charge-stripe/{card_id}/{trip_id}', [BookingController::class,'index_charge_stripe'])->name('index_charge_stripe');
+Route::get('/refund-booking/{trip_id}', [BookingController::class,'refund_booking'])->name('refund_booking');
 
 Route::post('/step-one/booking', [BookingController::class,'store_step_one'])->name('store_step_one');
 Route::post('/step-two/booking', [BookingController::class,'store_step_two'])->name('store_step_two');
@@ -135,6 +139,8 @@ Route::post('/store-plan', [PlanController::class,'store_plan'])->name('store_pl
 Route::get('/delete-plan/{id}', [PlanController::class,'delete_plan'])->name('delete_plan');
 Route::get('/edit-plan/{id}', [PlanController::class,'edit_plan'])->name('edit_plan');
 Route::post('/update-plan/{id}', [PlanController::class,'update_plan'])->name('update_plan');
+Route::get('/pay-plan/{id}', [PlanController::class,'index_pay_plan'])->name('pay_plan');
+Route::post('/pay-plan-stripe/{id}', [PlanController::class,'store_stripe'])->name('store_stripe');
 
 });
 

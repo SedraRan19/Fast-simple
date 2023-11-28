@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('plan_id');
             $table->datetime('start_date');
             $table->datetime('end_date');
+            $table->string('charge_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('plan_id')->references('id')->on('plans');
             $table->softDeletes();

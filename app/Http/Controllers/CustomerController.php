@@ -33,7 +33,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         return view('customer.card.create',compact('customer'));
     }
-
+    
     public function delete_card($id){
         try {
             DB::beginTransaction();

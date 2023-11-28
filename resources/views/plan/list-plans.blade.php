@@ -31,7 +31,7 @@
                             @endforeach
                         </ul>
                         <div class="row px-3 py-2">
-                                <a href="" class="text-center p-4 wrapper selectable-button-selected font120 font-weight-bold" style="color:white;">Select Plan</a>
+                            <a href="{{route('pay_plan',['id'=>$plan->id])}}" class="text-center p-4 wrapper selectable-button-selected font120 font-weight-bold" style="color:white;">Select Plan</a>
                         </div>
                     </div>
                 </div>

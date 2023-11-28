@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\{Customer,User,Vehicle_category,Vehicle,Driver,Booking,Permission_role};
+use App\Models\{Customer,User,Vehicle_category,Vehicle,Driver,Booking,Permission_role,Setting,Card,Charge};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Helpers\PermissionHelper;
+use Illuminate\Mail\Transport\MailgunTransport; 
+use Stripe\Stripe;
+use Stripe\StripeClient;
+use Stripe\PaymentIntent;
+use Stripe\Exception\CardException;
 
 class BookingController extends Controller
 {
@@ -21,9 +26,22 @@ class BookingController extends Controller
         return view('booking.step1');
     }
 
-    public function index_manage_booking(){
+    public function index_manage_booking($id){
         if(PermissionHelper::control('Create Bookings') == false)abort(404, 'Page Not Found');
-        return view('booking.manage-booking');
+        $trip = Booking::find($id);
+        return view('booking.manage-booking',compact('trip'));
+    }
+
+    public function index_charge_booking($id){
+        $trip = Booking::find($id);
+        $cards = Card::where('customer_id',$trip->customer_id)->get();
+        return view('booking.charge-booking',compact('trip','cards'));
+    }
+
+    public function index_charge_stripe($card_id, $trip_id){
+        $trip = Booking::find($trip_id);
+        $card = Card::find($card_id);
+        return view('booking.stripe-charge',compact('trip','card'));
     }
 
     public function index_trip(){
@@ -75,6 +93,90 @@ class BookingController extends Controller
             ->get();
         return view('booking.table.trips', compact('trips'));
     }
+
+    public function use_card(Request $request, $trip_id)
+    {
+        try {
+        $user = auth()->user();
+        $trip = Booking::find($trip_id);
+
+        $setting = Setting::where('user_id', $user->id)->first();
+        $stripe = new StripeClient($setting->stripe_secret_key);
+       
+        $paymentIntent = $stripe->paymentIntents->create([
+            'amount' => $trip->price * 100,
+            'currency' => 'usd',
+            'payment_method' => $request->payment_method,
+            'description' => 'booking',
+            'confirm' => true,
+            'receipt_email' => $trip->customer->email,
+            'return_url' => 'https://127.0.0.1:8000/plans',
+        ]);
+
+        $paymentMethod = $stripe->paymentMethods->retrieve(
+            $request->payment_method
+        );
+
+        $chargeId = null;
+
+        if ($paymentIntent->charges && count($paymentIntent->charges->data) > 0) {
+            $chargeId = $paymentIntent->charges->data[0]->id;
+        }
+        $charge = Charge::create([
+            'payment_id'=>$paymentIntent->id,
+            'amount'=>$trip->price,
+            'client_secret'=>$paymentIntent->client_secret,
+            'confirmation_method'=>'true',
+            'customer'=>$trip->customer->first_name.' '.$trip->customer->last_name,
+            'user_id'=>$user->id,
+            'trip_id'=>$trip->id,
+            'customer_id'=>$trip->customer_id ,
+            'payment_method'=>$request->payment_method,
+            'charges_id'=>$paymentMethod->card->id ?? '',
+            'card_id'=>$cardId ?? '',
+        ]);
+
+        } catch (\Throwable $th) {
+            return back()->with('error', 'There was a problem processing your payment');
+        }
+        return back()->withSuccess('Payment done.');
+    }
+
+    public function refund_booking($trip_id){
+        try {
+            $user = auth()->user();
+            $trip = Booking::find($trip_id);
+
+            $setting = Setting::where('user_id', $user->id)->first();
+            $stripe = new StripeClient($setting->stripe_secret_key);
+    
+            $charge = Charge::where('trip_id',$trip_id)->first();
+            if(!$charge) return back()->with('error'.'Na pas encore payer.');
+            else{
+                $refund = $stripe->refunds->create([
+                    'payment_intent' => $charge->payment_id,
+                ]);
+            }
+            // Le remboursement a réussi
+            return response()->json(['message' => 'Remboursement effectué avec succès']);
+        } catch (\Stripe\Exception\CardException $e) {
+            // Erreur liée à la carte
+            return response()->json(['error' => $e->getMessage()], 422);
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Erreur liée à la requête
+            return response()->json(['error' => $e->getMessage()], 422);
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Erreur d'authentification
+            return response()->json(['error' => $e->getMessage()], 422);
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Erreur de connexion à l'API
+            return response()->json(['error' => $e->getMessage()], 422);
+        } catch (\Stripe\Exception\Base $e) {
+            // Autres erreurs Stripe
+            return response()->json(['error' => $e->getMessage()], 422);
+        }
+    }
+    
 
     public function search_trip(Request $req){
         $user = auth()->user();
@@ -204,8 +306,16 @@ class BookingController extends Controller
                 'driver_id'=>$tempData['driver_id'],
                 'driver_payout'=>$request->driver_payout,
             ]);
+            $setting = Setting::where('user_id',$user->parent_id)->first();
+            $transport = new MailgunTransport([
+                'host' => $setting->smtp_host,
+                'port' => $setting->smtp_port,
+                'username' => $setting->smtp_username,
+                'password' => $setting->smtp_password,
+                'encryption' => 'tls',
+            ]);
+            Mail::to($customer->email)->send((new CustomMail)->build()->mailer($transport));
             session()->forget('tempData');
-            // dd('tonga eto');
             return redirect('/trips');
         // } catch (\Throwable $th) {
         //     return back()->with('error','Sorry, there was an error')->withInput();  

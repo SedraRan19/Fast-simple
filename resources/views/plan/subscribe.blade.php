@@ -8,76 +8,73 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 py-2">
-            <form id="payment-form" action="{{ route('subscription.create') }}" method="POST">
-                @csrf
-                <input type="hidden" name="plan" id="plan" value="{{ $plan->slug }}">
-                <div class="form-group">
-                    <label for="">Name</label>
-                    <input type="text" name="name" id="card-holder-name" class="form-control" value=""
-                        placeholder="Name on the card">
-                </div>
-                <div class="form-group">
-                    <label for="">Card details</label>
-                    <div id="card-element"></div>
-                </div>
-                <p id="card-error" class="text-danger"></p>
-
-
-                <button type="submit" class="btn btn-primary w-100" id="card-button"
-                    data-secret="{{ $data['intent']['client_secret'] }}">Pay</button>
-            </form>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="text-3xl md:text-5xl font-extrabold text-center uppercase mb-12 bg-gradient-to-r from-indigo-400 via-purple-500 to-indigo-600 bg-clip-text text-transparent transform -rotate-2">Make A Payment</h1>
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
+                <form action="{{ route('store_stripe',['id'=>$plan->id]) }}" method="POST" id="card-form">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="card-name" class="inline-block font-bold mb-2 uppercase text-sm tracking-wider">Your name</label>
+                        <input type="text" name="name" id="card-name" class="border-2 border-gray-200 h-11 px-4 rounded-xl w-full" value="{{old('name')}}"> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="inline-block font-bold mb-2 uppercase text-sm tracking-wider">Email</label>
+                        <input type="email" name="email" id="email" class="border-2 border-gray-200 h-11 px-4 rounded-xl w-full" value="{{old('email')}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="card" class="inline-block font-bold mb-2 uppercase text-sm tracking-wider">Card details</label>
+            
+                        <div class="bg-gray-100 p-6 rounded-xl">
+                            <div id="card"></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-500 uppercase rounded-xl font-extrabold text-white px-6 h-12">Pay 👉</button>
+                </form>
+            </div>
         </div>
-    </div>
+    
     <script src="https://js.stripe.com/v3/"></script>
-
-
     <script>
-        const stripe = Stripe(
-            'pk_test_51IUxMgHXJdvNSq45I11SBknIE2HZoY6QQpoeoqviawThlMozBCpnonrNwSqjJdpPWzIUinnNKtB2FRynAeCRWCsq00auAvukD5'
-            )
-
+        let stripe = Stripe('{{ env("STRIPE_KEY") }}')
         const elements = stripe.elements()
-        const cardElement = elements.create('card')
-
-        cardElement.mount('#card-element')
-
-        const form = document.getElementById('payment-form')
-        const cardBtn = document.getElementById('card-button')
-        const cardHolderName = document.getElementById('card-holder-name')
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault()
-
-            cardBtn.disabled = true
-            const {
-                setupIntent,
-                error
-            } = await stripe.confirmCardSetup(
-                cardBtn.dataset.secret, {
-                    payment_method: {
-                        card: cardElement,
-                        billing_details: {
-                            name: cardHolderName.value
-                        }
-                    }
+        const cardElement = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '16px'
                 }
-            )
-
+            }
+        })
+        const cardForm = document.getElementById('card-form')
+        const cardName = document.getElementById('card-name')
+        cardElement.mount('#card')
+        cardForm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            const { paymentMethod, error } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: cardName.value
+                }
+            })
             if (error) {
-                $('#card-error').html(error.message);
-                cardBtn.disable = false
-                return false
+                console.log(error)
             } else {
-                let token = document.createElement('input')
-
-                token.setAttribute('type', 'hidden')
-                token.setAttribute('name', 'token')
-                token.setAttribute('value', setupIntent.payment_method)
-
-                form.appendChild(token)
-
-                form.submit();
+                let input = document.createElement('input')
+                input.setAttribute('type', 'hidden')
+                input.setAttribute('name', 'payment_method')
+                input.setAttribute('value', paymentMethod.id)
+                cardForm.appendChild(input)
+                cardForm.submit()
             }
         })
     </script>

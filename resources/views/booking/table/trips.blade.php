@@ -23,7 +23,7 @@
                         style="line-height:100%; vertical-align:middle;"><b>Price</b>: {{'$'.$trip->price}}</span></div>
 
                     <div class="col-md-6">                                        
-                        <a href="{{route('manage_booking')}}">
+                        <a href="{{route('manage_booking',['id'=>$trip->id])}}">
                             <div class="text-center wrapper selectable-button-selected px-3 py-1 mt-3"
                                 style="color:white;" id="trip_edit">Manage</div>
                         </a>

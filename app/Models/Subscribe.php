@@ -13,6 +13,7 @@ class Subscribe extends Model
     protected $fillable = [
         'user_id',
         'plan_id',
+        'charge_id',
         'start_date',
         'end_date',
     ];
